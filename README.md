@@ -14,11 +14,11 @@
 4. Re-align the model towards the purpose
 
 ## Scope of this Document
-### PDCA
-### V-Model
-### Agility
-### Design Thinking
-### Systems Thinking
+### Practical examples
+### Flow of development activities
+### Hierarchy of development artifacts
+### Requirements of activities & artifacts
+### Model
 ### What's in
 ### What's out?
 
@@ -26,14 +26,10 @@
 
 ### The purpose of a development lifecycle
 
-*TODO*
+1. *The development lifecycle model shall guide the required activities and artifacts, to ensure the development achieves its purpose*
+2. *The development purpose, shall include customer satisfaction, to ensure that customer needs are met.*
 
-### Activities and Artifacts shape the development lifecycle
-
-*TODO*
-
-#### Activities
-*TODO*
+### Plan, Do, Check, Act
 ```mermaid
    flowchart LR
       Plan-->Do
@@ -41,74 +37,75 @@
       Check-->Act
       Act-->Plan
 ```
-*TODO*
+*Each step is an activity*
 
-#### Activities transform Artifacts
+### Activities and Artifacts shape the development lifecycle
+
 *TODO*
 ```mermaid
    flowchart LR
     Requirements["?"]
     Design["?"]
-    System["?"]
+    Implementation["?"]
     Feedback["?"]
     
-    System--"check"-->Feedback
+    Implementation--"check"-->Feedback
     Feedback--"act"-->Requirements
     Requirements--"plan"-->Design
-    Design--"do"-->System
+    Design--"do"-->Implementation
 ```
-*TODO*
+*Activities transform artifacts*
 
-#### High level artifacts
+### Activities transform Artifacts
 *TODO*
 ```mermaid
    flowchart LR
     Requirements
     Design
-    System
+    Implementation
     Feedback
     
-    System--"check"-->Feedback
+    Implementation--"check"-->Feedback
     Feedback--"act"-->Requirements
     Requirements--"plan"-->Design
-    Design--"do"-->System
+    Design--"do"-->Implementation
 ```
 *TODO*
 
 ### Problem space solution space
 
-#### Requirements connect Problem space with solution space
 
 ```mermaid
    flowchart LR
       Problem-->Solution
 ```
 
+1. The house shall be energy efficient.
 
+### Requirements connect Problem space with solution space
 
 ```mermaid
-   stateDiagram-v2
-    Requirements
-      state Problem{
-         Feedback
-      }
-
-      state Solution{
+   flowchart LR
+      subgraph  Solution
          Design
-         Result
-      }
+         Implementation
+      end
+      
+      subgraph  Problem
+         Requirements
+         Feedback
+      end
 
-      [*]-->Requirements
-      Result-->Feedback: check
-      Feedback-->Requirements: act
-      Requirements-->Design: plan
-      Design-->Result: do
-      Feedback --> [*]
+      Requirements--"plan"-->Design
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
+      Feedback--"act"-->Requirements
 ```
 
-Doesnt really make much sense.
+Requirements
+1. The heating system should use less than 100g carbon dioxide equivalent.
 
-#### Needs and Requirements
+#### Keeping the problem space and solution space separate
 
 1. Stakeholder requirements vs System requirements
 2. Needs preferred to stakeholder requirement
@@ -116,153 +113,132 @@ Doesnt really make much sense.
 4. Requirements are design artifacts
 
 ```mermaid
-   stateDiagram-v2
-      state Problem{
+   flowchart LR
+      subgraph Solution
+        subgraph Design
+            Requirements
+         end
+         Implementation
+      end
+      
+      subgraph Problem
          Needs
          Feedback
-      }
+      end
 
-      state Solution{
-        state Design{
-            Requirements
-        }
-         System
-      }
-
-      [*]-->Needs
-      System-->Feedback: check
-      Feedback-->Needs: act
-      Needs-->Design: plan
-      Design-->System: do
-      Feedback --> [*]
+      Needs--"plan"-->Design
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
+      Feedback--"act"-->Needs
 ```
-### ???
+#### ???
 
 What are design artifacts?
 
 ```mermaid
-   stateDiagram-v2
-      state Problem{
-         Needs
-         Feedback
-      }
-
-      state Solution{
-        state Design{
+   flowchart LR
+      subgraph Solution
+        subgraph Design
             Elements
             Relationships
             Requirements
-        }
-        System
-      }
-    Elements-->Requirements
-    Relationships-->Requirements
+         end
+         Implementation
+      end
+      
+      subgraph Problem
+         Needs
+         Feedback
+      end
 
-      [*]-->Needs
-      System-->Feedback: check
-      Feedback-->Needs: act
-      Needs-->Design: plan
-      Design-->System: do
-      Feedback --> [*]
+      Needs--"plan"-->Elements
+      Elements--"plan"-->Requirements
+      Elements--"plan"-->Relationships
+      Relationships--"plan"-->Requirements
+      Requirements--"do"-->Implementation
+      Implementation--"check"-->Feedback
+      Feedback--"act"-->Needs
+
+```
+
+#### System of systems
+
+```mermaid
+   flowchart LR
+      subgraph Solution
+        subgraph Design
+            Elements
+            Relationships
+            Requirements
+         end
+         subgraph Implementation
+            Parts
+            System
+         end
+      end
+      
+      subgraph Problem
+         Needs
+         Feedback
+      end
+
+      Needs--"plan"-->Elements
+      Elements--"plan"-->Requirements
+      Elements--"plan"-->Relationships
+      Relationships--"plan"-->Requirements
+      Requirements--"do"-->Parts
+      Parts--"do"-->System
+      System--"check"-->Feedback
+      Feedback--"act"-->Needs
 ```
 
 #### V-model
 
 ```mermaid
-   stateDiagram-v2
-      state Problem{
-         Needs
-         Feedback
-      }
-
-      state Solution{
-        state Design{
+   flowchart LR
+      subgraph Solution
+        subgraph Design
             Elements
             Relationships
             Requirements
-        }
-        System
-      }
-    Elements-->Requirements
-    Relationships-->Requirements
+         end
+         subgraph Implementation
+            Parts
+            System
+         end
+      end
+      
+      subgraph Problem
+         Needs
+         Feedback
+      end
 
-      [*]-->Needs
-      System-->Feedback: check
-      Feedback-->Needs: act
-      Needs-->Design: plan
-      Design-->System: do
-      System-->Design: verify
-      System-->Needs: validate
-      Feedback --> [*]
+      Needs--"plan"-->Elements
+      Elements--"plan"-->Requirements
+      Elements--"plan"-->Relationships
+      Relationships--"plan"-->Requirements
+      Requirements--"do"-->Parts
+      Parts--"do"-->System
+      Parts--"verify"-->Requirements
+      System--"check"-->Feedback
+      System--"validate"-->Needs
+      Feedback--"act"-->Needs
+```
+
+#### Start Stop
+
+```mermaid
+   flowchart LR
+      Start-->Stop
 ```
 
 #### Maturity dimension
 
 ##### Iterations
 
-```mermaid
-   stateDiagram-v2
-      state Problem{
-         Need
-         Feedback
-      }
-
-      state Solution{
-        state Design{
-            Element
-            Relationship
-            Requirement
-        }
-        System
-      }
-        Element-->Requirement
-        Relationship-->Requirement
-
-      [*]-->Need
-      System-->Feedback: check
-      Feedback-->Need: act
-      Need-->Design: plan
-      Design-->System: do
-      System-->Design: verify
-      System-->Need: validate
-      Feedback --> [*]
-```
-
 ##### Quality
 
 #### System of systems
-
-```mermaid
-   stateDiagram-v2
-      state Problem{
-         Need
-         Feedback
-      }
-
-      state Solution{
-        state Design{
-            Element
-            Relationship
-            Requirement
-        }
-       state Enviroment{
-        state System{
-        Part
-       }
-       }
-      }
-        Element-->Requirement
-        Relationship-->Requirement
-
-      [*]-->Need
-      System-->Feedback: check
-      Feedback-->Need: act
-      Need-->Design: plan
-      Design-->System: do
-      System-->Design: verify
-      System-->Need: validate
-      Feedback --> [*]
-```
 
 #### Documents
 
