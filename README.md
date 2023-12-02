@@ -7,10 +7,12 @@
 
 ## Scope
 ### What's in
-### what's out 
+### what's out
 
-## PCDA cycle
-### How its known
+## Unified Development Lifecycle Model 
+
+### PCDA cycle
+#### How its known
 ```mermaid
    flowchart LR
       Plan-->Do
@@ -18,7 +20,7 @@
       Check-->Act
       Act-->Plan
 ```
-### Its actually activities
+#### Its actually activities
 ```mermaid
    flowchart LR
     Requirements["?"]
@@ -31,7 +33,7 @@
     Requirements--"plan"-->Design
     Design--"do"-->System
 ```
-### Whats in between
+#### Whats in between
 ```mermaid
    flowchart LR
     Requirements
@@ -45,9 +47,9 @@
     Design--"do"-->System
 ```
 
-## Problem space solution space
+### Problem space solution space
 
-### Requirements connect Problem space with solution space
+#### Requirements connect Problem space with solution space
 
 1. Doesnt really make much sense.
 
@@ -71,7 +73,7 @@
       Feedback --> [*]
 ```
 
-### Needs and Requirements
+#### Needs and Requirements
 
 1. Stakeholder requirements vs System requirements
 2. Needs preferred to stakeholder requirement
@@ -99,7 +101,7 @@
       Design-->System: do
       Feedback --> [*]
 ```
-## ???
+### ???
 
 What are design artifacts?
 
@@ -129,7 +131,7 @@ What are design artifacts?
       Feedback --> [*]
 ```
 
-### V-model
+#### V-model
 
 ```mermaid
    stateDiagram-v2
@@ -159,9 +161,9 @@ What are design artifacts?
       Feedback --> [*]
 ```
 
-### Maturity dimension
+#### Maturity dimension
 
-#### Iterations
+##### Iterations
 
 ```mermaid
    stateDiagram-v2
@@ -191,9 +193,9 @@ What are design artifacts?
       Feedback --> [*]
 ```
 
-#### Quality
+##### Quality
 
-### System of systems
+#### System of systems
 
 ```mermaid
    stateDiagram-v2
@@ -227,6 +229,6 @@ What are design artifacts?
       Feedback --> [*]
 ```
 
-### Documents
+#### Documents
 
-#### Entities
+##### Entities
