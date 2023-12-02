@@ -1,5 +1,14 @@
 # Process as a System II: A Unified Development Lifecycle Model for Systems Engineering
 
+## Introduction
+### Issue
+### Concepts
+### First principles
+
+## Scope
+### What's in
+### what's out 
+
 ## PCDA cycle
 ### How its known
 ```mermaid
