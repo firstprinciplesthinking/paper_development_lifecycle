@@ -1,18 +1,39 @@
 # Process as a System II: A Unified Development Lifecycle Model for Systems Engineering
 
 ## Introduction
-### Issue
-### Concepts
+
+### Concepts don't quite fit
+1. V-Model creates unnecessary abstraction at the architecture/integration level
+2. Agility is perceived as a counter to v-model, which it is not
+3. PDCA is too high level
+
 ### First principles
+1. Establish purpose
+2. Understand elements and their function
+3. Challenge pre-existing concepts
+4. Re-align the model towards the purpose
 
-## Scope
+## Scope of this Document
+### PDCA
+### V-Model
+### Agility
+### Design Thinking
+### Systems Thinking
 ### What's in
-### what's out
+### What's out?
 
-## Unified Development Lifecycle Model 
+## Unified Development Lifecycle Model
 
-### PCDA cycle
-#### How its known
+### The purpose of a development lifecycle
+
+*TODO*
+
+### Activities and Artifacts shape the development lifecycle
+
+*TODO*
+
+#### Activities
+*TODO*
 ```mermaid
    flowchart LR
       Plan-->Do
@@ -20,7 +41,10 @@
       Check-->Act
       Act-->Plan
 ```
-#### Its actually activities
+*TODO*
+
+#### Activities transform Artifacts
+*TODO*
 ```mermaid
    flowchart LR
     Requirements["?"]
@@ -33,7 +57,10 @@
     Requirements--"plan"-->Design
     Design--"do"-->System
 ```
-#### Whats in between
+*TODO*
+
+#### High level artifacts
+*TODO*
 ```mermaid
    flowchart LR
     Requirements
@@ -46,12 +73,18 @@
     Requirements--"plan"-->Design
     Design--"do"-->System
 ```
+*TODO*
 
 ### Problem space solution space
 
 #### Requirements connect Problem space with solution space
 
-1. Doesnt really make much sense.
+```mermaid
+   flowchart LR
+      Problem-->Solution
+```
+
+
 
 ```mermaid
    stateDiagram-v2
@@ -72,6 +105,8 @@
       Design-->Result: do
       Feedback --> [*]
 ```
+
+Doesnt really make much sense.
 
 #### Needs and Requirements
 
