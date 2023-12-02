@@ -1,4 +1,4 @@
-# Process as a System II: A Unified Development Lifecycle Model for Systems Engineering
+# Process as a System II: An Organic Development Lifecycle Model for Systems Engineering
 
 ## Introduction
 
@@ -13,6 +13,11 @@
 3. Challenge pre-existing concepts
 4. Re-align the model towards the purpose
 
+### The purpose of a development lifecycle
+
+1. The development lifecycle model shall guide the required activities and artifacts, to ensure the development achieves its purpose.
+2. The development purpose, shall include customer satisfaction, to ensure that customer needs are met.
+
 ## Scope of this Document
 ### Practical examples
 ### Flow of development activities
@@ -22,14 +27,11 @@
 ### What's in
 ### What's out?
 
-## Unified Development Lifecycle Model
+## An organic flow of development activities
 
-### The purpose of a development lifecycle
+### The fundamental development elements
 
-1. *The development lifecycle model shall guide the required activities and artifacts, to ensure the development achieves its purpose*
-2. *The development purpose, shall include customer satisfaction, to ensure that customer needs are met.*
-
-### Plan, Do, Check, Act
+#### The Deming(?) cycle
 ```mermaid
    flowchart LR
       Plan-->Do
@@ -39,9 +41,8 @@
 ```
 *Each step is an activity*
 
-### Activities and Artifacts shape the development lifecycle
+#### Activities and Artifacts shape the development lifecycle
 
-*TODO*
 ```mermaid
    flowchart LR
     Requirements["?"]
@@ -54,10 +55,9 @@
     Requirements--"plan"-->Design
     Design--"do"-->Implementation
 ```
-*Activities transform artifacts*
 
-### Activities transform Artifacts
-*TODO*
+#### Activities transform Artifacts
+
 ```mermaid
    flowchart LR
     Requirements
@@ -70,7 +70,6 @@
     Requirements--"plan"-->Design
     Design--"do"-->Implementation
 ```
-*TODO*
 
 ### Problem space solution space
 
@@ -82,7 +81,7 @@
 
 1. The house shall be energy efficient.
 
-### Requirements connect Problem space with solution space
+#### Requirements connect Problem space with solution space
 
 ```mermaid
    flowchart LR
@@ -102,8 +101,10 @@
       Feedback--"act"-->Requirements
 ```
 
-Requirements
-1. The heating system should use less than 100g carbon dioxide equivalent.
+|---|---|
+|Requirements|The heat pump should create less than 100g carbon dioxide equivalent.|
+
+### Design Thinking
 
 #### Keeping the problem space and solution space separate
 
@@ -131,9 +132,9 @@ Requirements
       Implementation--"check"-->Feedback
       Feedback--"act"-->Needs
 ```
-#### ???
+### Systems Thinking
 
-What are design artifacts?
+### Building blocks of a system model
 
 ```mermaid
    flowchart LR
@@ -161,7 +162,7 @@ What are design artifacts?
 
 ```
 
-#### System of systems
+### V-model
 
 ```mermaid
    flowchart LR
@@ -183,63 +184,96 @@ What are design artifacts?
       end
 
       Needs--"plan"-->Elements
-      Elements--"plan"-->Requirements
-      Elements--"plan"-->Relationships
-      Relationships--"plan"-->Requirements
-      Requirements--"do"-->Parts
-      Parts--"do"-->System
-      System--"check"-->Feedback
-      Feedback--"act"-->Needs
-```
-
-#### V-model
-
-```mermaid
-   flowchart LR
-      subgraph Solution
-        subgraph Design
-            Elements
-            Relationships
-            Requirements
-         end
-         subgraph Implementation
-            Parts
-            System
-         end
-      end
-      
-      subgraph Problem
-         Needs
-         Feedback
-      end
-
-      Needs--"plan"-->Elements
-      Elements--"plan"-->Requirements
-      Elements--"plan"-->Relationships
-      Relationships--"plan"-->Requirements
-      Requirements--"do"-->Parts
-      Parts--"do"-->System
+      Elements--"specify"-->Requirements
+      Elements--"specify"-->Relationships
+      Relationships--"specify"-->Requirements
+      Requirements--"implement"-->Parts
+      Parts--"integrate"-->System
       Parts--"verify"-->Requirements
       System--"check"-->Feedback
       System--"validate"-->Needs
       Feedback--"act"-->Needs
 ```
 
-#### Start Stop
+### System of systems
 
 ```mermaid
    flowchart LR
-      Start-->Stop
+      subgraph Solution
+        subgraph Design
+            Elements
+            Relationships
+            Requirements
+         end
+         subgraph Implementation
+            Parts
+            System
+         end
+      end
+      
+      subgraph Problem
+         subgraph Needs
+         end
+         subgraph Feedback
+            Demo
+            Retrospective
+         end
+      end
+
+      Needs--"plan"-->Elements
+      Elements--"plan"-->Requirements
+      Elements--"plan"-->Relationships
+      Relationships--"plan"-->Requirements
+      Requirements--"do"-->Parts
+      Parts--"do"-->System
+      System--"check"-->Feedback
+      Feedback--"act"-->Needs
 ```
 
-#### Maturity dimension
+#### Maturity & Iterations
 
-##### Iterations
+- 2 week iteration makes no sense, depends on depths of design and implementation for a single need
 
-##### Quality
+```mermaid
+   flowchart LR
+      subgraph Solution
+         subgraph Story
+            subgraph Design
+               Elements
+               Relationships
+               Requirements
+            end
+            subgraph Implementation
+               Parts
+               System
+            end
+         end
+      end
+      
+      subgraph Problem
+         Needs
+         Feedback
+      end
 
-#### System of systems
+      Needs--"plan"-->Elements
+      Elements--"plan"-->Requirements
+      Elements--"plan"-->Relationships
+      Relationships--"plan"-->Requirements
+      Requirements--"do"-->Parts
+      Parts--"do"-->System
+      System--"check"-->Feedback
+      Feedback--"act"-->Needs
+```
 
-#### Documents
 
-##### Entities
+### Quality
+
+## An organic hierarchy of development artifacts
+
+### Negative effect of documents
+
+### Entities
+
+## Summary
+
+### Development flow
