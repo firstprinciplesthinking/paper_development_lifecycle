@@ -2,7 +2,7 @@
 
 ## Introduction
 
-### Concepts don't quite fit
+### Organic development for organic resources
 1. V-Model creates unnecessary abstraction at the architecture/integration level
 2. Agility is perceived as a counter to v-model, which it is not
 3. PDCA is too high level
@@ -13,13 +13,15 @@
 3. Challenge pre-existing concepts
 4. Re-align the model towards the purpose
 
-### The purpose of a development lifecycle
+## Scope of this Document
 
+### The purpose of a development lifecycle
 1. The development lifecycle model shall guide the required activities and artifacts, to ensure the development achieves its purpose.
 2. The development purpose, shall include customer satisfaction, to ensure that customer needs are met.
-
-## Scope of this Document
-### Practical examples
+### Practical example
+3. Building an energy efficient house
+   1. Some of the work can only be done in a series
+   2. Some of the work can be parallel
 ### Flow of development activities
 ### Hierarchy of development artifacts
 ### Requirements of activities & artifacts
@@ -45,14 +47,14 @@
 
 ```mermaid
    flowchart LR
-    Requirements["?"]
+    Mission["?"]
     Design["?"]
     Implementation["?"]
     Feedback["?"]
     
     Implementation--"check"-->Feedback
-    Feedback--"act"-->Requirements
-    Requirements--"plan"-->Design
+    Feedback--"act"-->Mission
+    Mission--"plan"-->Design
     Design--"do"-->Implementation
 ```
 
@@ -60,14 +62,14 @@
 
 ```mermaid
    flowchart LR
-    Requirements
+    Mission
     Design
     Implementation
     Feedback
     
     Implementation--"check"-->Feedback
-    Feedback--"act"-->Requirements
-    Requirements--"plan"-->Design
+    Feedback--"act"-->Mission
+    Mission--"plan"-->Design
     Design--"do"-->Implementation
 ```
 
@@ -91,27 +93,28 @@
       end
       
       subgraph  Problem
-         Requirements
+         Mission
          Feedback
       end
 
-      Requirements--"plan"-->Design
+      Mission--"plan"-->Design
       Design--"do"-->Implementation
       Implementation--"check"-->Feedback
-      Feedback--"act"-->Requirements
+      Feedback--"act"-->Mission
 ```
 
-|---|---|
-|Requirements|The heat pump should create less than 100g carbon dioxide equivalent.|
+The heat pump should create less than 100g carbon dioxide equivalent.
 
 ### Design Thinking
 
 #### Keeping the problem space and solution space separate
 
-1. Stakeholder requirements vs System requirements
-2. Needs preferred to stakeholder requirement
-3. Needs are problem artifacts
-4. Requirements are design artifacts
+1. "Technical" requirements is meaningless
+2. Stakeholder needs vs System requirements
+   1. 
+3. Needs preferred to stakeholder requirement
+4. Needs are problem artifacts
+5. Requirements are design artifacts
 
 ```mermaid
    flowchart LR
@@ -123,14 +126,16 @@
       end
       
       subgraph Problem
-         Needs
+         subgraph Mission
+            Needs
+         end
          Feedback
       end
 
-      Needs--"plan"-->Design
+      Mission--"plan"-->Design
       Design--"do"-->Implementation
       Implementation--"check"-->Feedback
-      Feedback--"act"-->Needs
+      Feedback--"act"-->Mission
 ```
 ### Systems Thinking
 
@@ -148,51 +153,20 @@
       end
       
       subgraph Problem
-         Needs
+         subgraph Mission
+            Needs
+         end
          Feedback
       end
 
-      Needs--"plan"-->Elements
-      Elements--"plan"-->Requirements
-      Elements--"plan"-->Relationships
-      Relationships--"plan"-->Requirements
-      Requirements--"do"-->Implementation
+      Elements-."specify".->Requirements
+      Elements-."specify".->Relationships
+      Relationships-."specify".->Requirements
+
+      Mission--"plan"-->Design
+      Design--"do"-->Implementation
       Implementation--"check"-->Feedback
-      Feedback--"act"-->Needs
-
-```
-
-### V-model
-
-```mermaid
-   flowchart LR
-      subgraph Solution
-        subgraph Design
-            Elements
-            Relationships
-            Requirements
-         end
-         subgraph Implementation
-            Parts
-            System
-         end
-      end
-      
-      subgraph Problem
-         Needs
-         Feedback
-      end
-
-      Needs--"plan"-->Elements
-      Elements--"specify"-->Requirements
-      Elements--"specify"-->Relationships
-      Relationships--"specify"-->Requirements
-      Requirements--"implement"-->Parts
-      Parts--"integrate"-->System
-      Parts--"verify"-->Requirements
-      System--"check"-->Feedback
-      System--"validate"-->Needs
-      Feedback--"act"-->Needs
+      Feedback--"act"-->Mission
 ```
 
 ### System of systems
@@ -212,23 +186,101 @@
       end
       
       subgraph Problem
-         subgraph Needs
+         subgraph Mission
+            Needs
          end
-         subgraph Feedback
-            Demo
-            Retrospective
+         Feedback
+      end
+
+      Mission--"plan"-->Design
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
+      Feedback--"act"-->Mission
+
+      Elements-."specify".->Requirements
+      Elements-."specify".->Relationships
+      Relationships-."specify".->Requirements
+
+      System-."integrate".->Parts
+```
+
+### Mission control
+
+```mermaid
+   flowchart LR
+      subgraph Solution
+        subgraph Design
+            Elements
+            Relationships
+            Requirements
          end
+         subgraph Implementation
+            Parts
+            System
+         end
+      end
+      
+      subgraph Problem
+         subgraph Mission
+            Stakeholders
+            Objectives
+            Needs
+         end
+         Feedback
+      end
+
+      Mission--"plan"-->Design
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
+      Feedback--"act"-->Mission
+
+      Elements-."specify".->Requirements
+      Elements-."specify".->Relationships
+      Relationships-."specify".->Requirements
+
+      System-."integrate".->Parts
+
+      Stakeholders-."specify".->Objectives
+      Objectives-."specify".->Needs
+```
+
+### V-model
+
+```mermaid
+   flowchart LR
+      subgraph Solution
+        subgraph Design
+            Elements
+            Relationships
+            Requirements
+         end
+         subgraph Implementation
+            Parts
+            System
+            Test
+         end
+      end
+      
+      subgraph Problem
+         Stakeholder
+         Needs
+         Use
+         Feedback
       end
 
       Needs--"plan"-->Elements
-      Elements--"plan"-->Requirements
-      Elements--"plan"-->Relationships
-      Relationships--"plan"-->Requirements
-      Requirements--"do"-->Parts
-      Parts--"do"-->System
+      Elements--"contain"-->Requirements
+      Elements--"contain"-->Relationships
+      Relationships--"contain"-->Requirements
+      Requirements--"implement"-->Parts
+      Parts--"integrate"-->System
+      Parts--"verify"-->Requirements
       System--"check"-->Feedback
+      System--"validate"-->Needs
       Feedback--"act"-->Needs
 ```
+
+### System of systems
 
 #### Maturity & Iterations
 
@@ -236,33 +288,37 @@
 
 ```mermaid
    flowchart LR
-      subgraph Solution
-         subgraph Story
-            subgraph Design
-               Elements
-               Relationships
-               Requirements
-            end
-            subgraph Implementation
-               Parts
-               System
-            end
+      subgraph Solution ["Story"]
+        subgraph Design
+            Elements
+            Relationships
+            Requirements
+         end
+         subgraph Implementation
+            Parts
+            System
          end
       end
       
-      subgraph Problem
+      subgraph Problem ["Refinement"]
          Needs
+      end
+      
+      subgraph Demo
          Feedback
       end
 
+
       Needs--"plan"-->Elements
-      Elements--"plan"-->Requirements
-      Elements--"plan"-->Relationships
-      Relationships--"plan"-->Requirements
-      Requirements--"do"-->Parts
-      Parts--"do"-->System
-      System--"check"-->Feedback
-      Feedback--"act"-->Needs
+      Elements--"specify"-->Requirements
+      Elements--"specify"-->Relationships
+      Relationships--"specify"-->Requirements
+      Requirements--"implement"-->Parts
+      Parts--"integrate"-->System
+      Parts--"verify"-->Requirements
+      System--"check"-->Demo
+      System--"validate"-->Needs
+      Demo--"act"-->Needs
 ```
 
 
