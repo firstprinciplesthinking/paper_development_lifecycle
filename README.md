@@ -50,6 +50,10 @@ Questions:
 
 ### No difference between system/software/hardware/mechanic
 
+### No difference between unit/component
+
+### Design is not documentation
+
 ### Hierarchy model for development artifacts
 
 ### Algorithm for development activities
@@ -150,7 +154,7 @@ The heat pump should create less than 100g carbon dioxide equivalent.
             Requirements
             Constraints
          end
-         System
+         Implementation
       end
       
       subgraph Problem
@@ -161,8 +165,8 @@ The heat pump should create less than 100g carbon dioxide equivalent.
       end
 
       Mission--"plan"-->Design
-      Design--"do"-->System
-      System--"check"-->Feedback
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
       Feedback--"act"-->Mission
 ```
 
@@ -175,7 +179,7 @@ The heat pump should create less than 100g carbon dioxide equivalent.
          Constraints
       end
 
-      System
+      Implementation
 
       Feedback
   
@@ -186,12 +190,12 @@ The heat pump should create less than 100g carbon dioxide equivalent.
       end
       
       Mission--"plan"-->Design
-      Design--"do"-->System
-      System--"check"-->Feedback
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
       Feedback--"act"-->Mission
 
       Stakeholders--"specify"-->Objectives
-      Objectives--"specify"-->Needs
+      Objectives--"elicit"-->Needs
 ```
 
 ### System of systems
@@ -202,8 +206,9 @@ The heat pump should create less than 100g carbon dioxide equivalent.
          Requirements
       end
 
-      subgraph System
-         Parts
+      subgraph Implementation
+         System["System"]
+         Parts["Parts"]
       end
    
       Feedback
@@ -214,19 +219,24 @@ The heat pump should create less than 100g carbon dioxide equivalent.
          Needs
       end
 
-
       Mission--"plan"-->Design
-      Design--"do"-->System
-      System--"check"-->Feedback
+      Design--"do"-->Implementation
+      Implementation--"check"-->Feedback
       Feedback--"act"-->Mission
 
+      Parts--"integrate"-->System
       Parts--"integrate"-->Parts
+      System~~~Parts
 
       Stakeholders--"specify"-->Objectives
-      Objectives--"specify"-->Needs
+      Objectives--"elicit"-->Needs
 ```
 
 ### Systems thinking
+
+Relationship instead of interaction, interface, dependency
+Design vs Code generation
+Elements <-> Parts
 
 ```mermaid
    flowchart LR
@@ -235,8 +245,10 @@ The heat pump should create less than 100g carbon dioxide equivalent.
          Relationships
          Requirements
       end
-      subgraph System
-         Parts
+
+      subgraph Implementation
+         System["System"]
+         Parts["Parts"]
       end
 
       Feedback
@@ -250,17 +262,20 @@ The heat pump should create less than 100g carbon dioxide equivalent.
       System--"check"-->Feedback
       Feedback--"act"-->Mission
 
+      Parts--"integrate"-->System
       Parts--"integrate"-->Parts
+      System~~~Parts
 
       Stakeholders--"specify"-->Objectives
-      Objectives--"specify"-->Needs
+      Objectives--"elicit"-->Needs
 
-      Elements--"demarcate"-->Requirements
-      Relationships--"coordinate"-->Requirements
-      Requirements--"specify"-->Parts
+      Elements--"specify"-->Requirements
+      Relationships--"specify"-->Requirements
+      Requirements--"implement"-->Parts
 
-      Needs--"materialize"-->Elements
-      Elements--"materialize"-->Relationships
+      Needs--"demarcate"-->Elements
+      Elements--"coordinate"-->Relationships
+      Elements--"contain"-->Elements
 ```
 
 |||
@@ -279,9 +294,14 @@ The heat pump should create less than 100g carbon dioxide equivalent.
 
 ### V-model
 
-Reverse direction
+The v-model introduces the aspect of verifying the system based on the defined design and validating based on the defined needs. This ensures two crucial objectives within system engineering, building the right system (validation), the right way (verification).
 
-Integration tests: All tests that verify requirements
+*TODO: Add image v-model*
+
+One of the common issues with the v-model is the question of: what is the appropriate level of detail for testing? It establishes abstraction layers between unit tests, integration tests, qualification tests, acceptance tests, and so on. These artificial separations are based on the separation of units, components, architectural design and detailed design.
+Yet, there is no common definition of what each of those artifacts are, or how to identify them. They are largely based on individual organizational needs and add little benefit to the development process itself. Even worse, when used to structure organizations they create process separations that are here to stay.
+
+With the use of an organic design model verification strategies can be appropriately applied, as the focus of the verification can be determined by an element's position and surroundings in the model. An implemented part can be tested according to the requirements that are directly specified for its element in the model. Once integrated, the element’s relationships and their requirements determine the integration tests. After all (planned) parts are integrated and the system is to be base lined, all verification tests can be executed. This approach offers a nuanced and automate-able approach to verification testing without the need for an artificial hierarchy of units, parts, and components.
 
 ```mermaid
    flowchart LR
@@ -320,13 +340,14 @@ Integration tests: All tests that verify requirements
       Stakeholders--"???"-->Objectives
       Objectives--"elicit"-->Needs
 
-      Elements--"demarcate"-->Requirements
-      Relationships--"coordinate"-->Requirements
-      Requirements--"specify"-->Parts
+      Elements--"specify"-->Requirements
+      Relationships--"specify"-->Requirements
+      Requirements--"implement"-->Parts
 
-      Needs--"materialize"-->Elements
-      Elements--"contain"-->Relationships
-      Elements--"contain"-->Elements
+      Needs--"demarcate"-->Elements
+      Elements--"coordinate"-->Relationships
+      Elements--"integrate"-->Elements
+
       Needs--"specify"-->UC
       Requirements--"specify"-->TC
 
@@ -335,6 +356,22 @@ Integration tests: All tests that verify requirements
       UC--"validate"-->System
 ```
 
+|||
+|---|---|
+|Objective|A system that fulfils the |
+|Need|A system that satisfies the stakeholder needs|
+|Need|The system parts are implemented according to the design|
+|Need|The system is implemented according to the design|
+- **Test cases**
+  - Test cases verify the achievement of the requirement
+  - **Verify Parts**
+    - After implementation of a part, verify all requirements of its respective element via their respective test cases.
+    - After integration of a part, verify all requirements of its respective element's relationships via their respective test cases.
+  - **Verify System**
+    - After integration of all relevant parts into the system, verify all requirements via their respective test cases.
+- **Use cases**
+  - **Validate System**
+    - After integration of all relevant parts into the system, validate all needs via their respective use cases.
 
 ## An organic hierarchy of development artifacts
 
@@ -376,6 +413,8 @@ Integration tests: All tests that verify requirements
 
 
 ## Summary
+
+- Requirements are design artifacts
 
 ### Development flow
 
