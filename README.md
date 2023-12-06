@@ -30,6 +30,11 @@ Questions:
 
 *It depends is not a valid answer: It depends on WHAT? Necessary to DO WHAT?*
 
+### Hill climbing
+
+Incremental improvement finds local maxima
+Finding the global maximum requires non-incremental improvement
+
 ## Scope of this Document
 
 ### First principles thinking
