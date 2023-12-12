@@ -25,17 +25,19 @@ We seldomly are asked to really explain a concept.
 
 Questions:
 - Requirements engineering
+  - How does requirements engineering support the development?
   - What does an appropriate breakdown of requirements depend on?
   - To which type of artifacts within the architectural design should requirements be linked?
+  - How does linking requirements to the architectural design support the development?
+  - How do you identify requirements that should be covered by unit tests?
   - How do you identify requirements that should be covered by integration tests?
 - Architectural design
   - How does architectural design support the development?
-  - What is the difference between an interaction and an interface?
   - Which types of artifacts are used within an architectural design?
   - How does architectural design differ from detailed design?
   - What does the appropriate level of detail of architectural design depend on?
-  - Why are interface definitions part of the architecture instead of the implementation?
-  - Why are class definitions part of the architecture instead of the implementation?
+  - Why are interface definitions part of the architectural design instead of the implementation?
+  - What is the difference between an interaction and an interface?
   - Are interfaces static or dynamic definitions?
 - Detailed design
   - How does detailed design support the development?
@@ -66,11 +68,16 @@ Finding the global maximum requires non-incremental improvement
 
 ## Scope of this Document
 
+Relationship instead of interaction, interface, dependency
+
 ### First principles thinking
+
 1. Establish purpose
 2. Understand elements and their function
 3. Challenge pre-existing concepts
 4. Re-align the model towards the purpose
+
+### Structure leads behavior
 
 ### Real world development
 1. Development concepts should suit to real world practice
@@ -264,81 +271,90 @@ The heat pump should create less than 100g carbon dioxide equivalent.
       Objectives--"elicit"-->Needs
 ```
 
-### Systems thinking
+### Systems Thinking
 
-Relationship instead of interaction, interface, dependency
-Design vs Code generation
-Elements <-> Parts
-Efficient development
-Design means making decision to achieve the system purpose
- - Complexity
- - Maintainability
+Systems thinking is an approach to abstract a system and its parts into a model as elements and relationships between elements. As the system contains parts and those parts contain other parts, so does the model and its elements. Every part of the system is directly represented by an element and its relationships. An element demarcates the boundaries of a part, while the relationships connect it to other parts.
+
+```mermaid
+   flowchart LR
+      subgraph Design["Design Model"]
+         subgraph Model["System Model"]
+            Elements
+            Relationships
+         end
+         Requirements
+      end
+
+      subgraph System
+         Parts["Parts"]
+      end
+
+      subgraph Mission
+         Needs
+      end
+
+      Parts--"integrate"-->Parts
+
+       Elements~~~Requirements
+      Relationships~~~Requirements
+
+
+      Requirements~~~Parts
+
+      Needs--"analyze"-->Elements
+      Elements--"configure"-->Relationships
+      Elements--"configure"-->Elements
+
+      Elements<-."represents".->Parts
+```
+
+
+Using this abstraction one can understand the complexity of the system.
+
+Another way of looking at this abstraction is to understand its complexity
+
+
+Structure yields behavior -> It is important to structure the model organically to ensure that development takes place organically.
+
+### Systems Design
+
+The word "design" has its origins in the Latin word "designare," which originally meant "to mark out," "to choose," or "to appoint." In the context of systems engineering design activities can be seen as a series of choices based on the analysis of preconditions or alternatives for the system. The design documents choices regarding the makeup of the system by assigning requirements to specific elements or relationships. These choices support the development of the system for low complexity through, decoupling, separation, and simplification. The depth of the model shall support the effective allocation of the requirements, meaning that the chosen element or relationship can actually implement the requirement.
 
 ```mermaid
    flowchart LR
       subgraph Design
-         Elements
-         Relationships
+         subgraph Model
+            Elements
+            Relationships
+         end
          Requirements
       end
 
-      subgraph Implementation
-         System["System"]
+      subgraph System
          Parts["Parts"]
       end
 
-      Feedback
-
       subgraph Mission
-         Stakeholders
-         Objectives
          Needs
       end
 
-      System--"check"-->Feedback
-      Feedback--"act"-->Mission
-
-      Parts--"integrate"-->System
       Parts--"integrate"-->Parts
-      System~~~Parts
 
-      Stakeholders--"specify"-->Objectives
-      Objectives--"elicit"-->Needs
-
-      Elements--"specify"-->Requirements
-      Relationships--"specify"-->Requirements
+      Elements--"allocate"-->Requirements
+      Relationships--"allocate"-->Requirements
       Requirements--"implement"-->Parts
 
-      Needs--"demarcate"-->Elements
-      Elements--"coordinate"-->Relationships
-      Elements--"contain"-->Elements
+      Needs--"analyze"-->Elements
+      Elements--"configure"-->Relationships
+      Elements--"configure"-->Elements
+
+      Elements<-."represents".->Parts
+      Design<-."represents".->System
 ```
 
-- **Objective**: The development process is effective
-  - **Need**: The development process limits complexity within the system
-  - **Need**: The development process ensure maintainability of the system
-    - **Elements**
-      - represents the boundaries of a to be implemented part of the system.
-    - **Relationships**
+In traditional systems engineering processes, requirements engineering is seen as a precursor to design activities, despite the fact that a requirement can not be formulated without referencing elements from within the design. In this development lifecycle the design definition can not be separated, a requirement is dependent on the definition of its element and an element is characterized by its requirement.
 
-|||
-|---|---|
-|Objective|A system with no unnecessary parts, every part serves the system purpose|
-|Need|A design that defines every required part|
-|Requirements||
--  A model shall ???
--  An element shall 
--  An element may contain other elements to the detail necessary for the definition of relationships or requirements.
--  An element may contain relationships
--  An element shall contain requirements
--  A relationship shall represent the actions or dependencies of a to be implemented part of the system to another.
--  A relationship should have a equal reaction???
--  A relationship should contain requirements
-
-
-Maintainability
-A system with low complexity
-Manage complexity
+Concepts, Diagrams are requirements
 
 ### V-model
 
@@ -346,8 +362,7 @@ The v-model introduces the aspect of verifying the system based on the defined d
 
 *TODO: Add image v-model*
 
-One of the common issues with the v-model is the question of: what is the appropriate level of detail for testing? The model establishes abstraction layers between unit tests, integration tests, qualification tests, acceptance tests, and so on. These artificial separations are based on the separation of units, components, architectural design and detailed design.
-Yet, there is no common definition of what each of those artifacts are, or how to identify them. They are largely based on individual organizational needs and add little benefit to the development process itself. Even worse, when used to structure organizations they cause unproductive process separations that are here to stay.
+One of the common issues with the v-model is the question of: what is the appropriate level of detail for testing? The model establishes abstraction layers between unit tests, integration tests, qualification tests, acceptance tests, and so on. These artificial separations are based on the separation of units, components, architectural design and detailed design. Yet, there is no common definition of what each of those artifacts are, or how to identify them. They are largely based on individual organizational needs and add little benefit to the development process itself. Even worse, when used to structure organizations they cause unproductive process separations that are here to stay.
 
 With the use of an organic design model verification strategies can be appropriately applied, as the focus of the verification can be determined by an element's position and surroundings in the model. An implemented part can be tested according to the requirements that are directly specified for its element in the model. Once integrated, the element’s relationships and their requirements determine the integration tests. After all relevant parts are integrated and the system is to be base lined, all verification tests can be executed. This approach offers a nuanced and automate-able approach to verification testing without the need for an artificial hierarchy of units, parts, and components.
 
@@ -372,8 +387,6 @@ With the use of an organic design model verification strategies can be appropria
       end
 
       subgraph Mission
-         Stakeholders
-         Objectives
          Needs
       end
 
@@ -382,9 +395,6 @@ With the use of an organic design model verification strategies can be appropria
       Parts--"integrate"-->System
       Parts--"integrate"-->Parts
       System~~~Parts
-
-      Stakeholders--"???"-->Objectives
-      Objectives--"elicit"-->Needs
 
       Elements--"specify"-->Requirements
       Relationships--"specify"-->Requirements
@@ -405,8 +415,8 @@ With the use of an organic design model verification strategies can be appropria
       UC--"collect"-->Feedback
 ```
 
-- **Objective**: The development process is effective, meaning there are no undesirable or unnecessary parts to the system.
-  - **Need**: The development process shall ensure that the system is implemented according to the design.
+- **Objective**: The development process ensures that the system has no undesirable or unnecessary parts.
+  - **Need**: The development process implements a system according to the design.
     - **Test cases**
       - verifies the achievement of a requirement
       - **Verify Parts**
@@ -414,82 +424,59 @@ With the use of an organic design model verification strategies can be appropria
         - After integration of a part, verify all requirements of its respective element's relationships via their respective test cases.
       - **Verify System**
         - After integration of all relevant parts into the system, verify all requirements via their respective test cases.
-  - **Need**: The development process shall ensure that the system satisfies the stakeholder needs.
+  - **Need**: The development process implements a system that satisfies the needs.
     - **Use cases**
       - **Validate System**
         - After integration of all relevant parts into the system, validate all needs via their respective use cases.
 
 ### Model Based Systems Engineering
+
+Needs to connect properly to architecture before actually being used
+
+Design vs Code generation
+
+Values & Signals
+
+Generation
+
 ```mermaid
    flowchart LR
-      subgraph Design
-         Elements
-         Relationships
-         Requirements
+      subgraph Analysis
+         subgraph Design
+            subgraph Model
+               Elements
+               Relationships
+            end
+            Requirements
+         end
       end
 
-
-      subgraph Implementation
-         subgraph Model
+      subgraph Synthesis
+         subgraph Realization
             Properties
-            Values
             Interfaces
-            Signals
+            Behaviors
          end
-         subgraph Tests
-            UC["Use cases"]
-            TC["Test cases"]
+
+         subgraph System
+            Parts["Parts"]
          end
-         System["System"]
-         Parts["Parts"]
-         Simulation
-         Generation
-      end
-   
-      subgraph Feedback
       end
 
-      subgraph Mission
-         Stakeholders
-         Objectives
-         Needs
-      end
+      Elements--allocate-->Requirements
+      Relationships--allocate-->Requirements
 
-      Feedback--"act"-->Mission
+      Elements--"configure"-->Relationships
+      Elements--"configure"-->Elements
 
-      Parts--"integrate"-->System
-      Parts--"integrate"-->Parts
-      System~~~Parts
+      Requirements--implement-->Behaviors
+      Elements--implement-->Properties
+      Relationships--implement-->Interfaces
 
-      Stakeholders--"???"-->Objectives
-      Objectives--"elicit"-->Needs
-
-      Elements--"specify"-->Requirements
-      Relationships--"specify"-->Requirements
-      Requirements--"implement"-->Parts
-
-      Needs--"demarcate"-->Elements
-      Elements--"coordinate"-->Relationships
-      Elements--"integrate"-->Elements
-
-      Parts--"verify"-->TC
-      System--"verify"-->TC
-      System--"validate"-->UC
-
-      TC--"collect"-->Feedback
-      UC--"collect"-->Feedback
-
-      Elements-->Properties
-      Relationships-->Interfaces
-
-      Properties-->Parts
-      Interfaces-->Parts
-
-      Properties-->Generation
-      Interfaces-->Generation
-
-      Generation-->Simulation
-      Simulation-->Feedback
+      Properties--integrate-->Parts
+      Interfaces--integrate-->Parts
+      Behaviors--integrate-->Parts
+      Parts--integrate-->Parts
 ```
 
 ## An organic hierarchy of development artifacts
